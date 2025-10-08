@@ -1,356 +1,198 @@
-# Polling System - Frontend
+---
 
-A modern, responsive polling system frontend built with React, Vite, and TailwindCSS. This application provides an intuitive interface for creating, managing, and voting on polls.
+# 🗳️ Polling System - Frontend
 
-## 🚀 Features
+A modern, responsive polling system built with **React**, **Vite**, and **TailwindCSS**, providing an intuitive interface for creating, managing, and voting on polls in real-time.
 
-### User Authentication
-- **Login/Register** with validation
-- **Separate Admin Registration** page at `/admin/register`
-- **JWT Token Storage** in localStorage
-- **Protected Routes** with role-based access
-- **Auto-redirect** based on authentication state
+---
 
-### For Regular Users
-- **View Polls**
-  - See all accessible public polls
-  - Access private polls you're assigned to
-  - Real-time status (Active/Expired)
-  - Human-readable expiry times
-- **Vote on Polls**
-  - One-click voting on active polls
-  - Visual feedback with success messages
-  - Automatic result display after voting
-- **Voting History**
-  - View all polls you've voted on
-  - See complete results and statistics
-  - Track your participation
-- **Profile Management**
-  - View username, email, and role
-  - Change password securely
+## 🚀 Key Features
 
-### For Admins
-- **Poll Management Dashboard**
-  - Create new polls with custom options
-  - Edit active polls
-  - Delete polls (with vote count confirmation)
-  - View all results
-- **Advanced Poll Creation**
-  - Set poll duration (1-120 minutes)
-  - Create private polls
-  - Multi-select user assignment for private polls
-  - Real-time validation
-- **View-Only Results**
-  - Admins can view but not vote
-  - Clear indication: "Admins can only view results"
+### 👤 Authentication
 
-### User Experience
-- **Responsive Design** - Works on all devices
-- **Success Messages** - Visual feedback for actions
-- **Error Handling** - Clear, helpful error messages
-- **Loading States** - Smooth loading indicators
-- **Real-time Updates** - Vote counts update immediately
-- **Intuitive Navigation** - Clean, organized interface
+* Secure **Login / Register** flow using JWT
+* **Role-based access** (User / Admin)
+* **Auto-redirect** based on user type
+* Token stored in localStorage with proper validation
 
-## 🛠️ Technology Stack
+### 🧍‍♂️ User Capabilities
 
-- **Framework**: React 18
-- **Build Tool**: Vite
-- **Styling**: TailwindCSS
-- **HTTP Client**: Axios
-- **Routing**: React Router v6
-- **State Management**: React Context API
-- **Charts**: Recharts (for result visualization)
-- **Language**: JavaScript (JSX)
+* View all **public and private polls**
+* **Vote** on active polls (one-click)
+* **Real-time result visualization**
+* View **voting history** and participation stats
+* Manage **profile and password**
 
-## 📋 Prerequisites
+### 🧑‍💼 Admin Capabilities
 
-- Node.js (v16 or higher)
-- npm or yarn
-- Running backend server (see backend README)
+* Create, edit, and delete polls
+* Assign users to **private polls**
+* Set **poll duration** (1–120 minutes)
+* View overall results and statistics
+* Manage polls via a dedicated **Admin Dashboard**
 
-## 🔧 Installation
+### ✨ User Experience
 
-1. **Navigate to frontend directory**
-   ```bash
-   cd polling-system-frontend
-   ```
+* Fully **responsive** for mobile, tablet, and desktop
+* **Smooth UI** with success/error messages
+* **Instant updates** after voting
+* **Clean, modern interface** with intuitive navigation
 
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
+---
 
-3. **Environment Setup**
-   
-   Create a `.env` file in the root directory:
-   ```env
-   VITE_API_URL=http://localhost:3000
-   ```
+## 🛠️ Tech Stack
 
-## 🚀 Running the Application
+* **React 18** + **Vite** – Fast and modern frontend setup
+* **TailwindCSS** – Utility-first responsive styling
+* **React Router v6** – Route handling and protection
+* **Axios** – API communication
+* **Context API** – Auth and global state management
+* **Recharts** – Poll result visualization
 
-### Development Mode
+---
+
+## ⚙️ Setup Instructions
+
+### Prerequisites
+
+* Node.js (v16 or higher)
+* npm or yarn
+* Backend server running (see backend README)
+
+### Installation
+
+```bash
+cd polling-system-frontend
+npm install
+```
+
+### Environment Setup
+
+Create a `.env` file:
+
+```env
+VITE_API_URL=http://localhost:3000
+```
+
+### Run the App
+
 ```bash
 npm run dev
 ```
 
-The app will start on `http://localhost:5173`
+The app runs on [http://localhost:5173](http://localhost:5173)
 
-### Build for Production
-```bash
-npm run build
-```
-
-### Preview Production Build
-```bash
-npm run preview
-```
+---
 
 ## 📁 Project Structure
 
 ```
 src/
 ├── components/
-│   ├── Loading.jsx            # Loading spinner
-│   ├── Navbar.jsx             # Navigation bar
-│   ├── PollCard.jsx           # Poll list item
-│   ├── PollForm.jsx           # Create/Edit poll form
-│   ├── PrivateRoute.jsx       # Route protection
-│   ├── ResultChart.jsx        # Vote results chart
-│   └── SuccessMessage.jsx     # Success notification
+│   ├── Navbar.jsx
+│   ├── PollForm.jsx
+│   ├── PollCard.jsx
+│   ├── ResultChart.jsx
+│   └── SuccessMessage.jsx
 ├── pages/
-│   ├── Login.jsx              # Login page
-│   ├── Register.jsx           # User registration
-│   ├── AdminRegister.jsx      # Admin registration
-│   ├── Polls.jsx              # Poll listing
-│   ├── PollDetails.jsx        # Single poll view
-│   ├── AdminDashboard.jsx     # Admin poll management
-│   ├── CreatePoll.jsx         # Create poll page
-│   ├── EditPoll.jsx           # Edit poll page
-│   ├── Profile.jsx            # User profile
-│   └── VotingHistory.jsx      # User voting history
+│   ├── Login.jsx
+│   ├── Register.jsx
+│   ├── Polls.jsx
+│   ├── PollDetails.jsx
+│   ├── AdminDashboard.jsx
+│   └── Profile.jsx
 ├── context/
-│   └── AuthContext.jsx        # Authentication context
+│   └── AuthContext.jsx
 ├── services/
-│   └── api.js                 # Axios configuration
-├── utils/
-│   └── poll.js                # Poll utility functions
-├── App.jsx                    # Main app component
-└── main.jsx                   # Application entry
+│   └── api.js
+├── App.jsx
+└── main.jsx
 ```
 
-## 🎨 Key Components
+---
 
-### PollForm
-Reusable form for creating and editing polls:
-- Title input with validation
-- Dynamic option management (add/remove)
-- Duration selector (1-120 minutes)
-- Private poll toggle
-- Multi-select user assignment
-- Frontend validation
+## 🔐 Authentication Flow
 
-### PollCard
-Displays poll summary in lists:
-- Poll title and status
-- Expiry countdown
-- Vote count
-- Quick voting buttons
-- Admin-specific UI
+1. User logs in → Receives JWT token
+2. Token stored in `localStorage`
+3. Axios injects token into all requests
+4. AuthContext manages session state
+5. PrivateRoute guards authenticated pages
+6. Role-based redirects (User/Admin)
 
-### ResultChart
-Visual representation of poll results:
-- Bar chart using Recharts
-- Percentage calculations
-- Color-coded options
-- Responsive design
+---
 
-### SuccessMessage
-Toast notification for user feedback:
-- Auto-dismiss after 3 seconds
-- Manual close button
-- Smooth animations
+## 📊 Core Components
 
-## 🔒 Authentication Flow
+### `PollForm`
 
-1. **Login/Register** → Receive JWT token
-2. **Store token** in localStorage
-3. **Set Authorization header** for all API requests
-4. **Context provider** manages auth state
-5. **PrivateRoute** protects authenticated routes
-6. **Role-based redirects** (Admin → `/admin/polls`, User → `/polls`)
+* Reusable form for creating/editing polls
+* Title, options, duration, and private poll settings
+* Real-time validation and dynamic option handling
 
-## 🎯 Features in Detail
+### `PollCard`
 
-### Poll Expiry Display
-Human-readable time format:
-- "Expires in 1h 30m" (active)
-- "Expired 45m ago" (expired)
-- Updates on page load/navigation
+* Displays poll summary and status
+* Shows expiry countdown and voting options
 
-### Private Poll Management
-- Admin selects users from dropdown
-- Shows username and email
-- Multi-select with checkboxes
-- Selected users highlighted in edit mode
-- Only regular users listed (admins excluded)
+### `ResultChart`
 
-### Validation
-- **Login**: Email format, password required
-- **Registration**: Username (3-20 chars, no spaces), email, password (6-50 chars)
-- **Poll Creation**: Title required, minimum 2 options, duration 1-120 minutes
-- **Password Change**: Old password verification, confirmation match
+* Visual poll result display using Recharts
+* Responsive and percentage-based visualization
 
-### Success Messages
-Shown for:
-- Poll created
-- Poll updated
-- Poll deleted
-- Vote submitted
-- Password changed
+### `SuccessMessage`
 
-## 🎨 Styling
+* Clean toast feedback for actions like vote, create, or update
 
-### TailwindCSS Classes
-- Responsive utilities (`sm:`, `md:`, `lg:`)
-- Flexbox and Grid layouts
-- Color scheme: Blue (primary), Green (success), Red (danger/errors)
-- Shadows and rounded corners
-- Hover effects
+---
 
-### Custom Styles
-- Green highlight for voted options (Voting History)
-- Progress bars for vote percentages
-- Loading spinners
-- Toast notifications
+## 🔗 API Endpoints (Frontend Integration)
 
-## 📱 Responsive Design
+| Action          | Method | Endpoint         |
+| --------------- | ------ | ---------------- |
+| User Login      | POST   | `/auth/login`    |
+| Register User   | POST   | `/auth/register` |
+| Get Polls       | GET    | `/poll`          |
+| Vote on Poll    | PUT    | `/poll/:id/vote` |
+| Create Poll     | POST   | `/poll`          |
+| Update Poll     | PUT    | `/poll/:id`      |
+| Delete Poll     | DELETE | `/poll/:id`      |
+| View Profile    | GET    | `/auth/profile`  |
+| Change Password | PUT    | `/auth/profile`  |
 
-- **Mobile**: Single column, stacked layout
-- **Tablet**: Adaptive spacing and sizing
-- **Desktop**: Multi-column where appropriate
-- **Navigation**: Hamburger menu (if needed)
+---
 
-## 🔗 API Integration
+## ⚡ Highlights
 
-All API calls go through `services/api.js`:
-```javascript
-// Axios instance with interceptors
-- Base URL from environment
-- Authorization header injection
-- Error handling
-- Token refresh logic (if needed)
-```
+* Responsive UI (TailwindCSS)
+* Real-time result updates
+* Clean role-based navigation
+* Comprehensive error and success handling
+* Organized, scalable folder structure
 
-### Endpoints Used
-- `POST /auth/login` - User login
-- `POST /auth/register` - User registration
-- `GET /auth/profile` - Get user profile
-- `PUT /auth/profile` - Update password
-- `GET /auth/users` - List regular users (admin)
-- `GET /auth/voted-polls` - Voting history
-- `GET /poll` - List polls
-- `GET /poll/:id` - Poll details
-- `POST /poll` - Create poll (admin)
-- `PUT /poll/:id` - Update poll (admin)
-- `DELETE /poll/:id` - Delete poll (admin)
-- `PUT /poll/:id/vote` - Vote on poll
-
-## 🐛 Error Handling
-
-- **Network errors**: "Failed to connect to server"
-- **401 Unauthorized**: Auto-logout and redirect to login
-- **400 Bad Request**: Display server error message
-- **404 Not Found**: "Resource not found"
-- **500 Server Error**: "Internal server error"
-
-## ⚡ Performance Optimizations
-
-- Vite for fast builds and HMR
-- Code splitting with React Router
-- Lazy loading (if implemented)
-- Optimized images
-- Minimal dependencies
-
-## 🧪 Testing
-
-```bash
-# Run linter
-npm run lint
-
-# Fix linting issues
-npm run lint:fix
-```
-
-## 🚀 Deployment
-
-### Build for Production
-```bash
-npm run build
-```
-
-Output will be in `dist/` directory.
-
-### Deploy to Vercel/Netlify
-1. Connect your Git repository
-2. Set build command: `npm run build`
-3. Set publish directory: `dist`
-4. Add environment variable: `VITE_API_URL`
-
-## 🔧 Configuration Files
-
-- `vite.config.js` - Vite configuration
-- `tailwind.config.cjs` - TailwindCSS configuration
-- `postcss.config.cjs` - PostCSS configuration
-- `eslint.config.js` - ESLint rules
-
-## 📝 Environment Variables
-
-```env
-VITE_API_URL=http://localhost:3000  # Backend API URL
-```
-
-Access in code:
-```javascript
-const apiUrl = import.meta.env.VITE_API_URL;
-```
-
-## 🎯 User Roles & Routes
-
-### Public Routes
-- `/login` - Login page
-- `/register` - User registration
-- `/admin/register` - Admin registration (unprotected URL)
-
-### Protected Routes (User)
-- `/polls` - View and vote on polls
-- `/polls/:id` - Poll details
-- `/profile` - User profile
-- `/voting-history` - Voting history
-
-### Protected Routes (Admin)
-- `/admin/polls` - Poll management dashboard
-- `/admin/polls/create` - Create new poll
-- `/admin/polls/:id/edit` - Edit poll
-- `/admin/polls/:id/results` - View results
+---
 
 ## 🤖 AI Usage Disclosure
 
-This frontend was developed with the assistance of AI tools (Claude/ChatGPT) for:
-- Initial project scaffolding
-- Component structure and boilerplate
-- TailwindCSS styling patterns
-- Form validation logic
-- Best practices implementation
-- Bug fixes and optimizations
+This frontend was developed with assistance from **AI tools (ChatGPT/GPT-5)** to improve:
 
-All code has been reviewed, tested, and customized for this specific application. Please review carefully before production use.
+* UI/UX design suggestions
+* Component structure and modularization
+* TailwindCSS styling patterns
+* Form validation logic
+* API integration and error handling
+* Documentation and performance recommendations
+
+All AI-assisted content was **manually reviewed, tested, and customized** for this specific project to ensure quality, reliability, and maintainability.
+
+---
 
 ## 📄 License
 
-This project is open source and available for educational purposes.
+This project is open source and available for educational and demonstration purposes.
 
 ---
 
 **Built with ⚛️ React + ⚡ Vite + 🎨 TailwindCSS**
+
+---
