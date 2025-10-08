@@ -1,300 +1,238 @@
-# Polling System - Backend
+---
 
-A secure polling system backend built with NestJS, MongoDB, and JWT authentication. This application enables users to create, vote on, and manage polls with role-based access control.
+# 🗳️ Polling System - Backend
 
-## 🚀 Features
+A secure and scalable **polling system backend** built with **NestJS**, **MongoDB**, and **JWT authentication**.
+This API powers user registration, authentication, poll management, and voting features with **role-based access control**.
 
-### Authentication & Authorization
-- **Secure User Registration** with email validation
-- **Password Hashing** using bcrypt
-- **JWT Token-based Authentication**
-- **Role-based Access Control** (Admin/User)
-- **Protected Routes** using Guards and Decorators
+---
 
-### Polling System
-- **Create Polls** (Admin only)
-  - Custom title and multiple options (minimum 2)
-  - Duration setting (1-120 minutes)
-  - Public or Private visibility
-- **Vote on Polls** (Regular users only)
-  - One vote per user per poll
-  - Real-time vote counting
-  - Duplicate vote prevention
-- **View Results**
-  - Admins can view all poll results
-  - Users can view results after voting or when poll expires
-- **Poll Management**
-  - Edit active polls (Admin only)
-  - Delete polls (Admin only)
-  - Auto-expiry based on duration
-- **Private Polls**
-  - Assign specific users who can vote
-  - Only visible to assigned users and admins
+## 🚀 Key Features
 
-### User Management
-- **Profile Management**
-  - View user profile
-  - Change password (with old password verification)
-- **Voting History**
-  - View all polls you've voted on
-  - See complete results and statistics
-- **Admin User List**
-  - Fetch all regular users (for private poll assignment)
+### 🔐 Authentication & Authorization
 
-## 🛠️ Technology Stack
+* Secure **user registration** and **login**
+* Passwords hashed with **bcrypt**
+* **JWT-based authentication**
+* **Role-based access control (RBAC)** for Admin and User
+* **Guards and decorators** for protected routes
 
-- **Framework**: NestJS (Node.js)
-- **Database**: MongoDB with Mongoose ODM
-- **Authentication**: JWT (JSON Web Tokens)
-- **Password Security**: bcrypt
-- **Validation**: class-validator
-- **Language**: TypeScript
+### 📊 Polling System
 
-## 📋 Prerequisites
+* **Admin Capabilities**
 
-- Node.js (v16 or higher)
-- MongoDB (local or cloud instance)
-- npm or yarn
+  * Create, edit, and delete polls
+  * Set duration (1–120 minutes)
+  * Choose public/private visibility
+  * Assign users for private polls
+  * View all poll results
+* **User Capabilities**
 
-## 🔧 Installation
+  * View public and assigned private polls
+  * Vote once per poll
+  * View results after voting or when polls expire
 
-1. **Clone the repository**
-   ```bash
-   cd polling-system-backend
-   ```
+### 👤 User Management
 
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
+* View and update profile
+* Change password securely
+* Track all polls voted on
+* Admins can list all regular users (for assigning private polls)
 
-3. **Environment Setup**
-   
-   Create a `.env` file in the root directory:
-   ```env
-   MONGO_URI=mongodb://localhost:27017/polling-system
-   JWT_SECRET=your-super-secret-jwt-key-change-this
-   PORT=3000
-   ```
+---
 
-4. **Build the project**
-   ```bash
-   npm run build
-   ```
+## 🧠 Tech Stack
 
-## 🚀 Running the Application
+* **Framework**: NestJS (Node.js)
+* **Database**: MongoDB (via Mongoose ODM)
+* **Authentication**: JWT (JSON Web Tokens)
+* **Password Hashing**: bcrypt
+* **Validation**: class-validator
+* **Language**: TypeScript
 
-### Development Mode
+---
+
+## ⚙️ Setup Instructions
+
+### Prerequisites
+
+* Node.js (v16 or higher)
+* MongoDB (local or cloud instance)
+
+### Installation
+
+```bash
+cd polling-system-backend
+npm install
+```
+
+### Environment Setup
+
+Create a `.env` file in the root directory:
+
+```env
+MONGO_URI=mongodb://localhost:27017/polling-system
+JWT_SECRET=your-secret-key
+PORT=3000
+```
+
+### Run the Server
+
 ```bash
 npm run start:dev
 ```
 
-### Production Mode
-```bash
-npm run start:prod
-```
+Server runs at: **[http://localhost:3000](http://localhost:3000)**
 
-### Watch Mode
-```bash
-npm run start
-```
+---
 
-The server will start on `http://localhost:3000`
+## 📡 API Endpoints Overview
 
-## 📡 API Endpoints
+### 🔑 Authentication Routes (`/auth`)
 
-### Authentication Routes (`/auth`)
+| Method | Endpoint            | Description            | Auth      |
+| ------ | ------------------- | ---------------------- | --------- |
+| POST   | `/auth/register`    | Register new user      | No        |
+| POST   | `/auth/login`       | Login user             | No        |
+| GET    | `/auth/profile`     | Get user profile       | ✅         |
+| PUT    | `/auth/profile`     | Update password        | ✅         |
+| GET    | `/auth/users`       | List all regular users | ✅ (Admin) |
+| GET    | `/auth/voted-polls` | User voting history    | ✅         |
 
-| Method | Endpoint | Description | Auth Required |
-|--------|----------|-------------|---------------|
-| POST | `/auth/register` | Register new user | No |
-| POST | `/auth/login` | Login user | No |
-| GET | `/auth/profile` | Get user profile | Yes |
-| PUT | `/auth/profile` | Update password | Yes |
-| GET | `/auth/users` | Get all regular users | Yes (Admin) |
-| GET | `/auth/voted-polls` | Get user's voting history | Yes |
+### 📋 Poll Routes (`/poll`)
 
-### Poll Routes (`/poll`)
+| Method | Endpoint         | Description           | Auth      |
+| ------ | ---------------- | --------------------- | --------- |
+| GET    | `/poll`          | List accessible polls | ✅         |
+| GET    | `/poll/:id`      | Get poll details      | ✅         |
+| POST   | `/poll`          | Create new poll       | ✅ (Admin) |
+| PUT    | `/poll/:id`      | Update poll           | ✅ (Admin) |
+| DELETE | `/poll/:id`      | Delete poll           | ✅ (Admin) |
+| PUT    | `/poll/:id/vote` | Vote on a poll        | ✅ (User)  |
 
-| Method | Endpoint | Description | Auth Required |
-|--------|----------|-------------|---------------|
-| GET | `/poll` | List accessible polls | Yes |
-| GET | `/poll/:id` | Get poll details | Yes |
-| POST | `/poll` | Create new poll | Yes (Admin) |
-| PUT | `/poll/:id` | Update poll | Yes (Admin) |
-| DELETE | `/poll/:id` | Delete poll | Yes (Admin) |
-| PUT | `/poll/:id/vote` | Vote on a poll | Yes (User) |
+---
 
-## 📊 Data Models
+## 🧩 Data Models
 
-### User Schema
+### 🧑 User Schema
+
 ```typescript
 {
-  username: string (unique, required)
-  email: string (unique, required)
-  password: string (hashed, required)
-  role: 'admin' | 'user' (default: 'user')
-  votedPolls: ObjectId[] (references to Poll)
-  createdAt: Date
+  username: string;
+  email: string;
+  password: string; // hashed
+  role: 'admin' | 'user';
+  votedPolls: ObjectId[];
+  createdAt: Date;
 }
 ```
 
-### Poll Schema
+### 📊 Poll Schema
+
 ```typescript
 {
-  title: string (required)
-  options: [{ text: string, votes: number }] (min 2)
-  votes: ObjectId[] (user IDs who voted)
-  createdBy: ObjectId (reference to User)
-  expiresAt: Date
-  durationMinutes: number (1-120, default: 60)
-  isPrivate: boolean (default: false)
-  allowedUsers: string[] (usernames for private polls)
-  createdAt: Date
-  updatedAt: Date
+  title: string;
+  options: [{ text: string; votes: number }];
+  createdBy: ObjectId;
+  expiresAt: Date;
+  durationMinutes: number;
+  isPrivate: boolean;
+  allowedUsers: string[];
+  createdAt: Date;
+  updatedAt: Date;
 }
 ```
 
-## 🔒 Security Features
+---
 
-1. **Password Security**
-   - Passwords hashed with bcrypt (salt rounds: 10)
-   - Minimum 6 characters required
-   - Old password verification for password changes
+## 🛡️ Security Features
 
-2. **JWT Authentication**
-   - Tokens include user ID, email, and role
-   - Protected routes validate tokens
-   - Stateless authentication
+* **Password hashing** with bcrypt (salt rounds: 10)
+* **JWT authentication** with expiry
+* **Role-based access control** (`@Roles('admin')`)
+* **Validation** via `class-validator`
+* **Protected private polls** (only assigned users can vote)
+* **Duplicate vote prevention**
+* **Automatic poll expiry** after the set duration
 
-3. **Role-Based Access Control**
-   - `@Roles('admin')` decorator for admin-only routes
-   - RolesGuard checks user permissions
-   - Admins cannot vote (view-only access)
+---
 
-4. **Input Validation**
-   - Email format validation
-   - Username uniqueness check
-   - Poll duration limits (max 120 minutes)
-   - Minimum 2 options per poll
+## 🧭 Core Logic Highlights
 
-5. **Error Handling**
-   - Generic login errors (security)
-   - Duplicate vote prevention
-   - Expired poll checks
-   - Private poll access control
+### 🗳️ Voting Rules
 
-## 🎯 Key Features Implementation
+* One vote per user per poll
+* Admins have **view-only access**
+* Users can only vote on accessible polls
 
-### Private Poll Access Control
-- Poll creator has full access
-- All admins can view all polls
-- Regular users see only:
-  - Public polls
-  - Private polls they created
-  - Private polls they're assigned to
+### ⏱️ Poll Expiry
 
-### Poll Expiration
-- Automatically calculated based on `durationMinutes`
-- Expired polls cannot be voted on
-- Expired polls cannot be edited
-- Results remain accessible
+* Automatically expires based on `durationMinutes`
+* Expired polls are **read-only**
+* Results remain viewable
 
-### Voting Rules
-- One vote per user per poll
-- Admins cannot vote (view-only)
-- Users must have access to private polls
-- Vote tracking in user's `votedPolls` array
+### 🔒 Access Control
 
-## 🧪 Testing
+* Admins → Full control of all polls
+* Regular users → Only see assigned or public polls
 
-```bash
-# Unit tests
-npm run test
-
-# E2E tests
-npm run test:e2e
-
-# Test coverage
-npm run test:cov
-```
-
-## 📝 Validation Rules
-
-### Registration
-- **Username**: 3-20 characters, no spaces
-- **Email**: Valid email format
-- **Password**: 6-50 characters
-
-### Poll Creation
-- **Title**: Required
-- **Options**: At least 2 options required
-- **Duration**: 1-120 minutes (required)
+---
 
 ## 🌐 CORS Configuration
 
-Currently configured for frontend at `http://localhost:5173`
+Default:
 
-To change:
 ```typescript
-// src/main.ts
 app.enableCors({
-  origin: 'your-frontend-url',
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+  origin: 'http://localhost:5173',
+  methods: 'GET,POST,PUT,DELETE',
   credentials: true,
 });
 ```
 
-## 📦 Project Structure
+Change `origin` to your frontend URL as needed.
+
+---
+
+## 📂 Project Structure
 
 ```
 src/
 ├── auth/
-│   ├── auth.controller.ts      # Authentication endpoints
-│   ├── auth.service.ts         # Auth business logic
-│   ├── auth.module.ts          # Auth module
-│   ├── auth.dto.ts             # DTOs for validation
-│   ├── jwt.strategy.ts         # JWT strategy
-│   ├── roles.guard.ts          # Role-based guard
-│   ├── roles.decorator.ts      # Roles decorator
-│   ├── get-user.decorator.ts   # User extractor
-│   ├── users.schema.ts         # User model
-│   └── poll.schema.ts          # Poll model
+│   ├── auth.controller.ts
+│   ├── auth.service.ts
+│   ├── auth.module.ts
+│   ├── auth.dto.ts
+│   ├── jwt.strategy.ts
+│   ├── roles.guard.ts
+│   ├── roles.decorator.ts
+│   ├── users.schema.ts
+│   └── poll.schema.ts
 ├── poll/
-│   ├── poll.controller.ts      # Poll endpoints
-│   ├── poll.service.ts         # Poll business logic
-│   ├── poll.module.ts          # Poll module
-│   └── poll.dto.ts             # Poll DTOs
-├── app.module.ts               # Root module
-└── main.ts                     # Application entry
+│   ├── poll.controller.ts
+│   ├── poll.service.ts
+│   ├── poll.module.ts
+│   └── poll.dto.ts
+├── app.module.ts
+└── main.ts
 ```
-
-## 🤝 Contributing
-
-This is a learning project. Contributions are welcome!
-
-## ⚠️ Important Notes
-
-1. **Change JWT Secret**: Always use a strong, unique JWT secret in production
-2. **Environment Variables**: Never commit `.env` file to version control
-3. **Database Security**: Use proper MongoDB authentication in production
-4. **HTTPS**: Always use HTTPS in production
-5. **Rate Limiting**: Consider adding rate limiting for production
-
-## 📄 License
-
-This project is open source and available for educational purposes.
-
-## 🤖 AI Usage Disclosure
-
-This project was developed with the assistance of AI tools (Claude/ChatGPT) for:
-- Code scaffolding and boilerplate generation
-- Best practices implementation
-- Bug fixing and optimization
-- Documentation
-
-All code has been reviewed and tested. Please review carefully before production use.
 
 ---
 
-**Built with NestJS** 🐈
+## 🧠 AI Usage Disclosure
+
+This backend was developed with the assistance of **AI tools (ChatGPT/GPT-5)** to improve:
+
+* Project scaffolding and architecture setup
+* DTO, module, and service generation
+* Validation and security best practices
+* Error handling and optimization
+* Documentation and code standardization
+
+All AI-assisted sections were **manually reviewed, tested, and customized** for this project to ensure clarity, maintainability, and production readiness.
+
+---
+
+**Built with 🧱 NestJS + 🍃 MongoDB + 🔐 JWT Authentication**
+
+---
