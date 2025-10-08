@@ -187,12 +187,6 @@ All AI-assisted content was **manually reviewed, tested, and customized** for th
 
 ---
 
-## 📄 License
-
-This project is open source and available for educational and demonstration purposes.
-
----
-
 **Built with ⚛️ React + ⚡ Vite + 🎨 TailwindCSS**
 
 ---
