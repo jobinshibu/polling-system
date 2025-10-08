@@ -203,22 +203,6 @@ npm run dev
 
 ---
 
-## 🧪 Testing & Quality
-
-```bash
-# Backend
-cd polling-system-backend
-npm run test
-
-# Frontend
-cd polling-system-frontend
-npm run lint
-```
-
-Includes validation, authentication, and functional tests for stability and consistency.
-
----
-
 ## 🔍 Implementation Highlights
 
 * Modular folder structure for scalability
@@ -267,7 +251,7 @@ This approach reflects **modern development workflow**, showcasing the ability t
 ## 👨‍💻 Developer
 
 **Developed by:** Jobin Shibu
-**Role:** Full-stack Developer
+**Role:** Node.js Developer
 **Technologies:** React, NestJS, MongoDB, TypeScript, TailwindCSS
 **Focus:** Scalable, secure, and maintainable full-stack applications
 
